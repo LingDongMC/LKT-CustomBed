@@ -1,5 +1,7 @@
 package net.mmyz.custombed.command;
 
+import net.mmyz.custombed.eventlistener.RecordBedLocation;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,14 +18,26 @@ public  class MyCommand implements CommandExecutor{
     				sender.sendMessage("/custombed deletebed <床名字> - 删除你自己的床");	
     				return true;
     			}
+    			RecordBedLocation rbl = new RecordBedLocation();
     			
-//    			Player player = (Player)sender;
+    			if (args[0].equalsIgnoreCase("setmarktool")){
+    				rbl.setMarkTool(((Player) sender).getPlayer(),sender);
+				}
     			
     			if (args[0].equalsIgnoreCase("setbed")) {
     				if (args.length == 2) {
-    					//加入监听器
-    					sender.sendMessage("已设置床！");
-    					return true;
+    					if(rbl.isMarkTool()== true){
+    						rbl.sendBedName(args[1]);
+    						if (rbl.isSuccessful()) {
+    							sender.sendMessage("已设置床！");
+    							return true;    														
+							}else{
+								sender.sendMessage("设置床失败！");
+								return true;
+							}
+    					}else{
+    						
+    					}
 					}else if(args.length == 1){
 						sender.sendMessage("请输入床的名字");
 						return true;
