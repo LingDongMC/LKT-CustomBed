@@ -1,0 +1,10 @@
+name: CustomBed
+main: net.mmyz.custombed.main.Main
+version: 0.1
+commands:
+ custombed:
+  description: 你自己的床
+  usage: /custombed
+  aliases: [cb]
+  permission: "custombed.use"
+  permission-message: 你没有使用该命令的权限
