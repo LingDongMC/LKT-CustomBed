@@ -16,7 +16,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class RecordBedLocation implements Listener{
+public final class RecordBedLocation implements Listener{
 	private ItemStack itemStack;
 	private Player player;
 	private String bedName;
@@ -25,7 +25,7 @@ public class RecordBedLocation implements Listener{
 	public void setMarkTool(Player p,CommandSender sender){
 		this.player = p;
 		this.itemStack = p.getItemInHand();
-		sender.sendMessage("ÒÑÉèÖÃ±ê¼Ç¹¤¾ßÎª"+itemStack.toString());
+		sender.sendMessage("ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½Ç¹ï¿½ï¿½ï¿½Îª"+itemStack.toString());
 	}
 	public boolean isMarkTool(){
 		if(this.itemStack != null){
@@ -37,6 +37,7 @@ public class RecordBedLocation implements Listener{
 	public void sendBedName(String bedName){
 		this.bedName = bedName;
 	}
+    
 	@EventHandler
 	public void getBedLocation(PlayerInteractEvent e){
 		if(this.player.getItemInHand().equals(this.itemStack) && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
