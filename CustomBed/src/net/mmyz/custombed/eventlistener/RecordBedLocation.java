@@ -18,8 +18,7 @@ public final class RecordBedLocation implements Listener{
 	@EventHandler
 	public void getBedLocation(PlayerInteractEvent e){
 		//看看this.itemStack是否为null
-		System.out.println(new Object().equals(this.itemStack));
-		
+		System.out.println(this.itemStack == null);
 		if(e.getItem().equals(this.itemStack) && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 			
 			//this.itemStack为null，不会执行这一句

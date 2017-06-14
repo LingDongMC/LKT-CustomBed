@@ -1,12 +1,14 @@
 package net.mmyz.custombed.command;
 
-import net.mmyz.custombed.eventlistener.RecordBedLocation;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public  class MyCommand implements CommandExecutor{
 	
@@ -16,28 +18,41 @@ public  class MyCommand implements CommandExecutor{
 
 		
 	@Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {	
     	if(cmd.getName().equalsIgnoreCase("custombed")){
     		if (sender instanceof Player) {
     			if(args.length ==0){
     				sender.sendMessage("/custombed setbed <床名字> - 设置你自己的床(注意准星方向，准星方向是脚的朝向)");
     				sender.sendMessage("/custombed deletebed <床名字> - 删除你自己的床");	
+    				sender.sendMessage("/custombed setmarktool - 设置一个标志工具(手里的物品)来你自己床的位置");	
     				return true;
     			}
     			Player player = ((Player) sender).getPlayer();
-    			RecordBedLocation rbl = new RecordBedLocation();
     			
     			if (args[0].equalsIgnoreCase("setmarktool")){
     				if (player.getItemInHand().getType().equals(Material.AIR)) {
     					sender.sendMessage("标志工具不能为空气！");
     					return true;
 					}else{
+						String markTool;
 						is = player.getItemInHand();
+						markTool = is.getType().name().toLowerCase();
 						isMarkTool = true;
-						sender.sendMessage("已设置标志工具为:"+is.getType().name().toLowerCase());
-						// 将is对象传入RRecordBedLocation中
-						rbl.setPlayerItem(is);
+						sender.sendMessage("已设置标志工具为:"+markTool);
+						
+						JsonObject temp = new JsonObject();
+						
+						JsonArray playerDataArray = new JsonArray();
+						
+						JsonObject playerDataElement = new JsonObject();
+						playerDataElement.addProperty("PlayerName",player.getName());
+						playerDataElement.addProperty("MarkTool", markTool);
+						
+						playerDataArray.add(playerDataElement);
+						
+						temp.add("PlayerData",playerDataArray);
+						
+					
 						return true;
 						}
 					}
