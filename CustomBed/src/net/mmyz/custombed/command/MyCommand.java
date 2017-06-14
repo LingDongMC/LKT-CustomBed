@@ -1,74 +1,87 @@
 package net.mmyz.custombed.command;
 
 import net.mmyz.custombed.eventlistener.RecordBedLocation;
-
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public  class MyCommand implements CommandExecutor{
 	
-    @Override
+	public  ItemStack is;
+	private boolean isMarkTool = false;
+	public  String bedName;
+
+		
+	@Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		
     	if(cmd.getName().equalsIgnoreCase("custombed")){
     		if (sender instanceof Player) {
     			if(args.length ==0){
-    				sender.sendMessage("/custombed setbed <´²Ãû×Ö> - ÉèÖÃÄã×Ô¼ºµÄ´²(×¢Òâ×¼ĞÇ·½Ïò£¬×¼ĞÇ·½ÏòÊÇ½ÅµÄ³¯Ïò)");
-    				sender.sendMessage("/custombed deletebed <´²Ãû×Ö> - É¾³ıÄã×Ô¼ºµÄ´²");	
+    				sender.sendMessage("/custombed setbed <åºŠåå­—> - è®¾ç½®ä½ è‡ªå·±çš„åºŠ(æ³¨æ„å‡†æ˜Ÿæ–¹å‘ï¼Œå‡†æ˜Ÿæ–¹å‘æ˜¯è„šçš„æœå‘)");
+    				sender.sendMessage("/custombed deletebed <åºŠåå­—> - åˆ é™¤ä½ è‡ªå·±çš„åºŠ");	
     				return true;
     			}
+    			Player player = ((Player) sender).getPlayer();
     			RecordBedLocation rbl = new RecordBedLocation();
     			
     			if (args[0].equalsIgnoreCase("setmarktool")){
-    				rbl.setMarkTool(((Player) sender).getPlayer(),sender);
-				}
+    				if (player.getItemInHand().getType().equals(Material.AIR)) {
+    					sender.sendMessage("æ ‡å¿—å·¥å…·ä¸èƒ½ä¸ºç©ºæ°”ï¼");
+    					return true;
+					}else{
+						is = player.getItemInHand();
+						isMarkTool = true;
+						sender.sendMessage("å·²è®¾ç½®æ ‡å¿—å·¥å…·ä¸º:"+is.getType().name().toLowerCase());
+						// å°†iså¯¹è±¡ä¼ å…¥RRecordBedLocationä¸­
+						rbl.setPlayerItem(is);
+						return true;
+						}
+					}
     			
     			if (args[0].equalsIgnoreCase("setbed")) {
     				if (args.length == 2) {
-    					if(rbl.isMarkTool()== true){
-    						rbl.sendBedName(args[1]);
-    						if (rbl.isSuccessful()) {
-    							sender.sendMessage("ÒÑÉèÖÃ´²£¡");
+    					if(isMarkTool== true){
+    						bedName = args[1];
+    							sender.sendMessage("å·²è®¾ç½®åºŠï¼");
     							return true;    														
 							}else{
-								sender.sendMessage("ÉèÖÃ´²Ê§°Ü£¡");
+								sender.sendMessage("è®¾ç½®åºŠå¤±è´¥ï¼");
 								return true;
 							}
     					}else{
     						
     					}
 					}else if(args.length == 1){
-						sender.sendMessage("ÇëÊäÈë´²µÄÃû×Ö");
+						sender.sendMessage("è¯·è¾“å…¥åºŠçš„åå­—");
 						return true;
 					}else{
-						sender.sendMessage("ÇëÊäÈëÕıÈ·µÄÉè¶¨Ö¸Áî");
+						sender.sendMessage("è¯·è¾“å…¥æ­£ç¡®çš„è®¾å®šæŒ‡ä»¤");
 						return true;
 					}
 				}
     			if (args[0].equalsIgnoreCase("deletebed")) {
     				if (args.length == 2) {
-    					//²éÕÒ´²
-    					//¼ÓÈë¼àÌıÆ÷
-    					sender.sendMessage("ÒÑÉ¾³ı´²£¡");
+    					//æŸ¥æ‰¾åºŠ
+     					//åŠ å…¥ç›‘å¬å™¨
+    					sender.sendMessage("å·²åˆ é™¤åºŠï¼");
     					return true;
 					}else if(args.length == 1){
-						sender.sendMessage("ÇëÊäÈëÉ¾³ı´²µÄÃû×Ö");
+						sender.sendMessage("è¯·è¾“å…¥åˆ é™¤åºŠçš„åå­—");
 						return true;
 					}else{
-						sender.sendMessage("ÇëÊäÈëÕıÈ·µÄÉ¾³ıÖ¸Áî");
+						sender.sendMessage("è¯·è¾“å…¥æ­£ç¡®çš„åˆ é™¤æŒ‡ä»¤");
 						return true;
 					}
 				}
     		}else{
-    			sender.sendMessage("ÇëÔÚÓÎÏ·ÖĞÊ¹ÓÃ¸ÃÃüÁî");
+    			sender.sendMessage("è¯·åœ¨æ¸¸æˆä¸­ä½¿ç”¨è¯¥å‘½ä»¤");
     			return true;    			
     		}
-    	}
         return true;
     }
-
-
-
 
 }

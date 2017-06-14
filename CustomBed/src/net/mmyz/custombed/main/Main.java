@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin{
 	@Override
 	public void onEnable(){
-		getLogger().info("²å¼şÆôÓÃ");
+		getLogger().info("æ’ä»¶å¯åŠ¨");
 		this.getCommand("custombed").setExecutor(new MyCommand());
 		Bukkit.getPluginManager().registerEvents(new RecordBedLocation(),this);
 	}
