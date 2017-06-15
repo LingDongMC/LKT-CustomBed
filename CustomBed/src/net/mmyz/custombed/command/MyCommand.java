@@ -1,5 +1,11 @@
 package net.mmyz.custombed.command;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -51,7 +57,23 @@ public  class MyCommand implements CommandExecutor{
 						playerDataArray.add(playerDataElement);
 						
 						temp.add("PlayerData",playerDataArray);
-						
+						System.out.println(temp.toString());
+						File f = new File("plugins/CustomBed/Temp/");
+						FileOutputStream fos;
+						try {
+							if (f.exists() == false) {
+								f.mkdirs();
+							}
+							fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
+							OutputStreamWriter osw = new OutputStreamWriter(fos);
+							osw.write(temp.toString());
+							osw.close();
+							fos.close();
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					
 						return true;
 						}
