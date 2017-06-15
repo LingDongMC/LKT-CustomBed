@@ -28,7 +28,7 @@ public  class MyCommand implements CommandExecutor{
     	if(cmd.getName().equalsIgnoreCase("custombed")){
     		if (sender instanceof Player) {
     			if(args.length ==0){
-    				sender.sendMessage("/custombed setbed <床名字> - 设置你自己的床(注意准星方向，准星方向是脚的朝向)");
+    				sender.sendMessage("/custombed setbed <床名字> - 设置你自己的床");
     				sender.sendMessage("/custombed deletebed <床名字> - 删除你自己的床");	
     				sender.sendMessage("/custombed setmarktool - 设置一个标志工具(手里的物品)来你自己床的位置");	
     				return true;
@@ -81,6 +81,7 @@ public  class MyCommand implements CommandExecutor{
     			
     			if (args[0].equalsIgnoreCase("setbed")) {
     				if (args.length == 2) {
+                        System.out.println("标记？"+isMarkTool);
     					if(isMarkTool== true){
     						bedName = args[1];
     							sender.sendMessage("已设置床！");
