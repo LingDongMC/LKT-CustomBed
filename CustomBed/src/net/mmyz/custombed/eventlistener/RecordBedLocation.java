@@ -1,18 +1,17 @@
 package net.mmyz.custombed.eventlistener;
 
-//import org.bukkit.Location;
-//import org.bukkit.entity.Player;
-//import org.bukkit.Location;
-//import org.bukkit.entity.Player;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-//import org.bukkit.event.block.Action;
-//import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.google.gson.JsonArray;
@@ -29,40 +28,31 @@ public final class RecordBedLocation implements Listener{
 		if (new File("plugins/CustomBed/Temp/data.json").exists() 
 				&& e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			try {
-				JsonParser temp = new JsonParser();
-				JsonObject jo = (JsonObject) temp.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
-				System.out.println(123456789);
-                JsonArray playerDataArray = jo.get("PlayerData").getAsJsonArray();
+				JsonParser jp = new JsonParser();
+				JsonObject temp = (JsonObject) jp.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
+				
+                JsonArray playerDataArray = temp.get("PlayerData").getAsJsonArray();
 
-                String playName = ((JsonObject)playerDataArray.get(0)).get("PlayerName").getAsString();
-                String markTool = ((JsonObject)playerDataArray.get(1)).get("MarkTool").getAsString();
-				System.out.println(markTool);
+                String playName = playerDataArray.get(0).getAsJsonObject().get("PlayerName").getAsString();
+                String markTool = playerDataArray.get(0).getAsJsonObject().get("MarkTool").getAsString();
 				
 				if(e.getPlayer().getName().equals(playName)
 					&& e.getItem().getType().name().equalsIgnoreCase(markTool)){
-
-					System.out.println("进来了");
                     
-//                  Player player = e.getPlayer();
-//                  Location l = e.getClickedBlock().getLocation();
-//		        	System.out.println(player.getName()+"BedName:"+"   "+MyCommand.bedName+"   "+"X:"+l.getBlockX()+"   "+"Y:"+l.getBlockY()+"   "+"Z:"+l.getBlockZ());
-                    
-                     JsonObject temp = new JsonObject();
+					Location l = e.getClickedBlock().getLocation();
 
-                     JsonArray locationDataArray = new JsonArray();
-
-                     JsonObject locatioDataElement = new JsonObject();
-                     locationDataElement.addProperty("LX",l.getBlockX());
-                     locationDataElement.addProperty("LY",l.getBlockY());
-                     locationDataElement.addProperty("LZ",l.getBlockZ());
+                    JsonObject locationDataElement = new JsonObject();
+                    locationDataElement.addProperty("LX",l.getBlockX());
+                    locationDataElement.addProperty("LY",l.getBlockY());
+                    locationDataElement.addProperty("LZ",l.getBlockZ());
                      
-                     locationDataArray.add(locationDataElement);
+                    playerDataArray.add(locationDataElement);
 
-                     temp.add("LocationData",locationDataArray);
+                    temp.add("PlayerData",playerDataArray);
                      
-                     fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
+                     FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
                      OutputStreamWriter osw = new OutputStreamWriter(fos);
-                     osw.write("\n"+temp.toString());
+                     osw.write(temp.toString());
                      osw.close();
                      fos.close();
 				}
@@ -71,6 +61,8 @@ public final class RecordBedLocation implements Listener{
 			} catch (JsonSyntaxException e1) {
 				e1.printStackTrace();
 			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
