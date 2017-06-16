@@ -27,8 +27,7 @@ public class MyCommand implements CommandExecutor {
 	public String bedName;
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String label,String[] args) {
 		if (cmd.getName().equalsIgnoreCase("custombed")) {
 			if (sender instanceof Player) {
 				if (args.length == 0) {
@@ -55,13 +54,12 @@ public class MyCommand implements CommandExecutor {
 						JsonArray playerDataArray = new JsonArray();
 
 						JsonObject playerDataElement = new JsonObject();
-						playerDataElement.addProperty("PlayerName",
-								player.getName());
+
 						playerDataElement.addProperty("MarkTool", markTool);
 
 						playerDataArray.add(playerDataElement);
 
-						temp.add("PlayerData", playerDataArray);
+						temp.add(player.getName(), playerDataArray);
 
 						File f = new File("plugins/CustomBed/Temp/");
 						FileOutputStream fos;
@@ -94,44 +92,44 @@ public class MyCommand implements CommandExecutor {
 							this.bedName = args[1];
 							// 添加一个/data/bedinfo.json来储存床名称、玩家名、床位置
 							try {
-								JsonObject info = new JsonObject();
-
-								JsonArray bedDataArray = new JsonArray();
-
-								JsonObject bedDataElement = new JsonObject();
-								
-								bedDataElement.addProperty("BedName",this.bedName);
-
 								JsonParser jp = new JsonParser();
 								JsonObject temp = (JsonObject) jp.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
+
+								String playName = ((Player) sender).getPlayer().getName();
+								JsonArray playerDataArray = temp.get(playName).getAsJsonArray();
 								
-								JsonArray playerDataArray = temp.get("PlayerData").getAsJsonArray();
-								String playName = playerDataArray.get(0).getAsJsonObject().get("PlayerName").getAsString();
+								if (playerDataArray.size() == 2) {
+									JsonObject locationDataElement = (JsonObject) playerDataArray.get(1);
+									JsonObject info = new JsonObject();
+									
+									JsonArray bedDataArray = new JsonArray();
+									
+									JsonObject bedDataElement = new JsonObject();
+									
+									bedDataElement.addProperty("BedName",this.bedName);
+									bedDataArray.add(bedDataElement);
+									
+									bedDataArray.add(locationDataElement);
+									
+									info.add(playName, bedDataArray);
+									
+									File f = new File("plugins/CustomBed/Data/");
+									FileOutputStream fos;
+									if (f.exists() == false) {
+										f.mkdirs();
+										fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
+										OutputStreamWriter osw = new OutputStreamWriter(fos);
+										osw.write(info.toString());
+										osw.close();
+										fos.close();
+										sender.sendMessage("已设置床！");
+										return true;
+									}
+								}else {
+									sender.sendMessage("设置床失败！请右键选择你要设置床的方块");
+									return true;
+								}
 								
-								bedDataElement.addProperty("PlayerName",playName);
-								
-								int LX = playerDataArray.get(1).getAsJsonObject().get("LX").getAsInt();
-								int LY = playerDataArray.get(1).getAsJsonObject().get("LY").getAsInt();
-								int LZ = playerDataArray.get(1).getAsJsonObject().get("LZ").getAsInt();
-								
-			                    bedDataElement.addProperty("LX",LX);
-			                    bedDataElement.addProperty("LY",LY);
-			                    bedDataElement.addProperty("LZ",LZ);
-								
-			                    bedDataArray.add(bedDataElement);
-			                    
-			                    info.add("BedInfo", bedDataArray);
-			                    
-			                    File f = new File("plugins/CustomBed/Data/");
-			                    FileOutputStream fos;
-			                    	if (f.exists() == false) {
-			                    		f.mkdirs();
-			                    	fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
-			                    	OutputStreamWriter osw = new OutputStreamWriter(fos);
-			                    	osw.write(temp.toString());
-			                    	osw.close();
-			                    	fos.close();
-			                    	}
 							} catch (JsonIOException e1) {
 								e1.printStackTrace();
 							} catch (JsonSyntaxException e1) {
@@ -141,11 +139,8 @@ public class MyCommand implements CommandExecutor {
 							}catch (IOException e) {
 								e.printStackTrace();
 							}
-			                 sender.sendMessage("已设置床！");
-			                 return true;
-						}else {
-							sender.sendMessage("设置床失败！");
-							return true;
+						}else{
+							sender.sendMessage("设置床失败！请设定你的标记工具(手里的物品)");
 						}
 					}else if (args.length == 1) {
 						sender.sendMessage("请输入床的名字");

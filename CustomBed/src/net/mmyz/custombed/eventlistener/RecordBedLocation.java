@@ -31,13 +31,11 @@ public final class RecordBedLocation implements Listener{
 				JsonParser jp = new JsonParser();
 				JsonObject temp = (JsonObject) jp.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
 				
-                JsonArray playerDataArray = temp.get("PlayerData").getAsJsonArray();
+                JsonArray playerDataArray = temp.get(e.getPlayer().getName()).getAsJsonArray();
 
-                String playName = playerDataArray.get(0).getAsJsonObject().get("PlayerName").getAsString();
                 String markTool = playerDataArray.get(0).getAsJsonObject().get("MarkTool").getAsString();
 				
-				if(e.getPlayer().getName().equals(playName)
-					&& e.getItem().getType().name().equalsIgnoreCase(markTool)){
+				if(e.getItem().getType().name().equalsIgnoreCase(markTool)){
                     
 					Location l = e.getClickedBlock().getLocation();
 
@@ -48,7 +46,7 @@ public final class RecordBedLocation implements Listener{
                      
                     playerDataArray.add(locationDataElement);
 
-                    temp.add("PlayerData",playerDataArray);
+                    temp.add(e.getPlayer().getName(),playerDataArray);
                      
                      FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
                      OutputStreamWriter osw = new OutputStreamWriter(fos);
