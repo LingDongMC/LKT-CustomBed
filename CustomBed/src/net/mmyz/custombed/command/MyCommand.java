@@ -67,8 +67,7 @@ public class MyCommand implements CommandExecutor {
 							if (f.exists() == false) {
 								f.mkdirs();
 							}
-							fos = new FileOutputStream(
-									"plugins/CustomBed/Temp/data.json");
+							fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
 							OutputStreamWriter osw = new OutputStreamWriter(fos);
 							osw.write(temp.toString());
 							osw.close();
@@ -78,7 +77,6 @@ public class MyCommand implements CommandExecutor {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-
 						return true;
 					}
 				}
@@ -92,32 +90,55 @@ public class MyCommand implements CommandExecutor {
 							this.bedName = args[1];
 							// 添加一个/data/bedinfo.json来储存床名称、玩家名、床位置
 							try {
-								JsonParser jp = new JsonParser();
-								JsonObject temp = (JsonObject) jp.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
+								JsonParser jp1 = new JsonParser();
+								JsonObject temp = (JsonObject) jp1.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
 
 								String playName = ((Player) sender).getPlayer().getName();
 								JsonArray playerDataArray = temp.get(playName).getAsJsonArray();
 								
 								if (playerDataArray.size() == 2) {
 									JsonObject locationDataElement = (JsonObject) playerDataArray.get(1);
-									JsonObject info = new JsonObject();
 									
-									JsonArray bedDataArray = new JsonArray();
-									
-									JsonObject bedDataElement = new JsonObject();
-									
-									bedDataElement.addProperty("BedName",this.bedName);
-									bedDataArray.add(bedDataElement);
-									
-									bedDataArray.add(locationDataElement);
-									
-									info.add(playName, bedDataArray);
-									
-									File f = new File("plugins/CustomBed/Data/");
-									FileOutputStream fos;
-									if (f.exists() == false) {
-										f.mkdirs();
-										fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
+									if(new File("plugins/CustomBed/Data/bedinfo.json").exists()){
+										JsonParser jp2 = new JsonParser();
+										JsonObject info = (JsonObject) jp2.parse(new FileReader("plugins/CustomBed/Data/bedinfo.json"));
+	
+										JsonArray bedDataArray = info.get(playName).getAsJsonArray();
+										
+										JsonObject bedDataElement = new JsonObject();
+										
+										bedDataElement.addProperty("BedName",this.bedName);
+										bedDataArray.add(bedDataElement);
+										
+										bedDataArray.add(locationDataElement);
+										
+										info.add(playName, bedDataArray);
+										
+										FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
+										OutputStreamWriter osw = new OutputStreamWriter(fos);
+										osw.write(info.toString());
+										osw.close();
+										fos.close();
+										sender.sendMessage("已设置床！");
+										return true;
+									}else{
+										JsonObject info = new JsonObject();
+										JsonArray bedDataArray = new JsonArray();
+										
+										JsonObject bedDataElement = new JsonObject();
+										
+										bedDataElement.addProperty("BedName",this.bedName);
+										bedDataArray.add(bedDataElement);
+										
+										bedDataArray.add(locationDataElement);
+										
+										info.add(playName, bedDataArray);
+										
+										File f = new File("plugins/CustomBed/Data/");
+										if (f.exists() == false) {
+											f.mkdirs();
+										}
+										FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
 										OutputStreamWriter osw = new OutputStreamWriter(fos);
 										osw.write(info.toString());
 										osw.close();
@@ -125,8 +146,8 @@ public class MyCommand implements CommandExecutor {
 										sender.sendMessage("已设置床！");
 										return true;
 									}
-								}else {
-									sender.sendMessage("设置床失败！请右键选择你要设置床的方块");
+									}else {
+										sender.sendMessage("设置床失败！请右键选择你要设置床的方块");
 									return true;
 								}
 								
@@ -159,7 +180,6 @@ public class MyCommand implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("deletebed")) {
 					if (args.length == 2) {
 						// 查找床
-						// 加入监听器
 						sender.sendMessage("已删除床！");
 						return true;
 					} else if (args.length == 1) {

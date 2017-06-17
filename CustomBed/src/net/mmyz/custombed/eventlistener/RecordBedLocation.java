@@ -25,8 +25,7 @@ public final class RecordBedLocation implements Listener{
 	
 	@EventHandler
 	public void getBedLocation(PlayerInteractEvent e){
-		if (new File("plugins/CustomBed/Temp/data.json").exists() 
-				&& e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+		if (new File("plugins/CustomBed/Temp/data.json").exists() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			try {
 				JsonParser jp = new JsonParser();
 				JsonObject temp = (JsonObject) jp.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
@@ -35,24 +34,58 @@ public final class RecordBedLocation implements Listener{
 
                 String markTool = playerDataArray.get(0).getAsJsonObject().get("MarkTool").getAsString();
 				
-				if(e.getItem().getType().name().equalsIgnoreCase(markTool)){
-                    
-					Location l = e.getClickedBlock().getLocation();
+				if(markTool.equalsIgnoreCase(e.getItem().getType().name())){
+					if (playerDataArray.size() == 1) {
+						Location l = e.getClickedBlock().getLocation();
+						
+						JsonObject locationDataElement = new JsonObject();
+						locationDataElement.addProperty("LX",l.getBlockX());
+						locationDataElement.addProperty("LY",l.getBlockY());
+						locationDataElement.addProperty("LZ",l.getBlockZ());
+						
+						playerDataArray.add(locationDataElement);
+						
+						temp.add(e.getPlayer().getName(),playerDataArray);
+						
+						e.getPlayer().sendMessage("床位置为：X="+l.getBlockX()+";Y="+l.getBlockY()+";Z="+l.getBlockZ());
+						
+						FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
+						OutputStreamWriter osw = new OutputStreamWriter(fos);
+						osw.write(temp.toString());
+						osw.close();
+						fos.close();
+					}else if(playerDataArray.size() == 2){
+						JsonObject newTemp = new JsonObject();
+						
+						JsonArray newPlayerDataArray = new JsonArray();
 
-                    JsonObject locationDataElement = new JsonObject();
-                    locationDataElement.addProperty("LX",l.getBlockX());
-                    locationDataElement.addProperty("LY",l.getBlockY());
-                    locationDataElement.addProperty("LZ",l.getBlockZ());
-                     
-                    playerDataArray.add(locationDataElement);
+						JsonObject newPlayerDataElement = new JsonObject();
 
-                    temp.add(e.getPlayer().getName(),playerDataArray);
-                     
-                     FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
-                     OutputStreamWriter osw = new OutputStreamWriter(fos);
-                     osw.write(temp.toString());
-                     osw.close();
-                     fos.close();
+						newPlayerDataElement.addProperty("MarkTool", markTool);
+						
+						Location l = e.getClickedBlock().getLocation();
+						
+						JsonObject newLocationDataElement = new JsonObject();
+
+						newLocationDataElement.addProperty("LX",l.getBlockX());
+						newLocationDataElement.addProperty("LY",l.getBlockY());
+						newLocationDataElement.addProperty("LZ",l.getBlockZ());
+						
+						newPlayerDataArray.add(newPlayerDataElement);
+						newPlayerDataArray.add(newLocationDataElement);
+						
+						newTemp.add(e.getPlayer().getName(),newPlayerDataArray);
+						
+						e.getPlayer().sendMessage("床位置为：X="+l.getBlockX()+";Y="+l.getBlockY()+";Z="+l.getBlockZ());
+						
+						System.out.println(newTemp.toString());
+						
+						FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Temp/data.json");
+						OutputStreamWriter osw = new OutputStreamWriter(fos);
+						osw.write(newTemp.toString());
+						osw.close();
+						fos.close();
+					}
 				}
 			} catch (JsonIOException e1) {
 				e1.printStackTrace();
@@ -63,7 +96,6 @@ public final class RecordBedLocation implements Listener{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		}
-			
+		  }
 		}
 	}
