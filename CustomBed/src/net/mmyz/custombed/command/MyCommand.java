@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import net.mmyz.custombed.main.BedLocation;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -25,6 +26,7 @@ public class MyCommand implements CommandExecutor {
 	public ItemStack is;
 	private boolean isMarkTool = false;
 	public String bedName;
+	public boolean isexists;
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,String[] args) {
@@ -89,6 +91,7 @@ public class MyCommand implements CommandExecutor {
 						if (this.isMarkTool == true) {
 							this.bedName = args[1];
 							// 添加一个/data/bedinfo.json来储存床名称、玩家名、床位置
+							this.isexists = false;
 							try {
 								JsonParser jp1 = new JsonParser();
 								JsonObject temp = (JsonObject) jp1.parse(new FileReader("plugins/CustomBed/Temp/data.json"));
@@ -96,39 +99,69 @@ public class MyCommand implements CommandExecutor {
 								String playName = ((Player) sender).getPlayer().getName();
 								JsonArray playerDataArray = temp.get(playName).getAsJsonArray();
 								
-								if (playerDataArray.size() == 2) {
+								if (playerDataArray.size() >= 1) {
 									JsonObject locationDataElement = (JsonObject) playerDataArray.get(1);
-									
 									if(new File("plugins/CustomBed/Data/bedinfo.json").exists()){
 										JsonParser jp2 = new JsonParser();
 										JsonObject info = (JsonObject) jp2.parse(new FileReader("plugins/CustomBed/Data/bedinfo.json"));
-	
+										
 										JsonArray bedDataArray = info.get(playName).getAsJsonArray();
 										
-										JsonObject bedDataElement = new JsonObject();
+										String[] bedNameFromDataArray = new String[bedDataArray.size()];
+										BedLocation locationFromPlayerDataArray = new BedLocation(
+																	playerDataArray.get(1).getAsJsonObject().get("LX").getAsDouble(), 
+																	playerDataArray.get(1).getAsJsonObject().get("LY").getAsDouble(), 
+																	playerDataArray.get(1).getAsJsonObject().get("LZ").getAsDouble(),
+																	playerDataArray.get(1).getAsJsonObject().get("World").getAsString());
 										
-										bedDataElement.addProperty("BedName",this.bedName);
-										bedDataArray.add(bedDataElement);
 										
-										bedDataArray.add(locationDataElement);
 										
-										info.add(playName, bedDataArray);
+										for (int i = 0; i < bedDataArray.size(); i++) {
+											bedNameFromDataArray[i] = bedDataArray.get(i).getAsJsonObject().get("BedName").getAsString();
+										}
 										
-										FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
-										OutputStreamWriter osw = new OutputStreamWriter(fos);
-										osw.write(info.toString());
-										osw.close();
-										fos.close();
-										sender.sendMessage("已设置床！");
+										for (int j = 0; j < bedDataArray.size(); j++){
+											System.out.println(j);
+											System.out.println(bedNameFromDataArray[j]);
+											if (this.bedName.equals(bedNameFromDataArray[j]) | 
+													locationFromPlayerDataArray.equals(new BedLocation(
+													bedDataArray.get(j).getAsJsonObject().get("LX").getAsDouble(), 
+													bedDataArray.get(j).getAsJsonObject().get("LY").getAsDouble(), 
+													bedDataArray.get(j).getAsJsonObject().get("LZ").getAsDouble(),
+													bedDataArray.get(j).getAsJsonObject().get("World").getAsString()))) {
+													this.isexists = false;
+													sender.sendMessage("该位置已经有名字为"+bedNameFromDataArray[j]+"的床");
+													System.out.println("jia");
+													break;
+											}else{
+												this.isexists = true;
+												System.out.println("zhen");
+												}
+										}
+										System.out.println(isexists);
+										if(isexists == true){
+											locationDataElement.addProperty("BedName",this.bedName);
+											
+											bedDataArray.add(locationDataElement);
+											
+											info.add(playName, bedDataArray);
+											
+											FileOutputStream fos = new FileOutputStream("plugins/CustomBed/Data/bedinfo.json");
+											OutputStreamWriter osw = new OutputStreamWriter(fos);
+											osw.write(info.toString());
+											osw.close();
+											fos.close();
+											sender.sendMessage("已设置床"+this.bedName+"!");
+											}
 										return true;
-									}else{
+									}
+									
+									
+									 else{
 										JsonObject info = new JsonObject();
 										JsonArray bedDataArray = new JsonArray();
 										
-										JsonObject bedDataElement = new JsonObject();
-										
-										bedDataElement.addProperty("BedName",this.bedName);
-										bedDataArray.add(bedDataElement);
+										locationDataElement.addProperty("BedName",this.bedName);
 										
 										bedDataArray.add(locationDataElement);
 										
@@ -143,12 +176,12 @@ public class MyCommand implements CommandExecutor {
 										osw.write(info.toString());
 										osw.close();
 										fos.close();
-										sender.sendMessage("已设置床！");
+										sender.sendMessage("已设置床"+this.bedName+"!");
 										return true;
-									}
+									  }
 									}else {
 										sender.sendMessage("设置床失败！请右键选择你要设置床的方块");
-									return true;
+										return true;
 								}
 								
 							} catch (JsonIOException e1) {
@@ -162,21 +195,17 @@ public class MyCommand implements CommandExecutor {
 							}
 						}else{
 							sender.sendMessage("设置床失败！请设定你的标记工具(手里的物品)");
+							return true;
 						}
 					}else if (args.length == 1) {
 						sender.sendMessage("请输入床的名字");
 						return true;
+					}else if(args.length > 2){
+						sender.sendMessage("请输入正确的设定指令");
+						return true;
 					}
-				}else {
-					sender.sendMessage("请输入正确的设定指令");
-					return true;
 				}
 
-				
-				
-				
-				
-				
 				if (args[0].equalsIgnoreCase("deletebed")) {
 					if (args.length == 2) {
 						// 查找床
@@ -195,6 +224,31 @@ public class MyCommand implements CommandExecutor {
 				return true;
 			}
 		}
+//		if(args[0].equalsIgnoreCase("test")){
+//			Player player = ((Player) sender).getPlayer();
+//			Set<Player> sleeping = Collections.newSetFromMap(new WeakHashMap<Player, Boolean>());
+//			
+//			sleeping.add(player);
+//			
+//			PacketContainer bedPacket = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.BED, false);
+//			Location l = player.getLocation();
+//			BlockPosition bp = new BlockPosition(l.getBlockX(),l.getBlockY(),l.getBlockZ());
+//			
+//			bedPacket.getEntityModifier(player.getWorld()).write(0, player);
+//			bedPacket.getIntegers().write(1, bp.getX()).write(2, bp.getY() + 1).write(3, bp.getZ());
+//			
+//			for(Player observer : ProtocolLibrary.getProtocolManager().getEntityTrackers(player)){
+//				try{
+//					ProtocolLibrary.getProtocolManager().sendServerPacket(observer, bedPacket);
+//					}
+//				
+//				catch(InvocationTargetException e){
+//					throw new RuntimeException("Cannot send packet.", e);
+//				}
+//			}
+//			
+//            System.out.println(123456);
+//		}
 		return true;
 	}
 }
