@@ -8,11 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,8 +19,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.BlockPosition;
+import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
@@ -109,34 +109,57 @@ public final class RecordBedLocation implements Listener{
 			}
 		  }
 		
-		/*尝试右键发送数据包，让玩家进入睡眠状态
-		 * 然而在127行出现Field index out of bounds. (Index: 1, Size: 1)异常
-		 * 未找到解决方法，开发进度暂停
+		/*理想：右键使玩家进入睡眠状态
+		 *现实：没有任何反应
+		 *为什么要创建一个改变方块的数据包，然后又创建一个变回来的数据包呢？
+		 *因为在spigot一个插件dalao提到，要让玩家进入睡眠状态，要让客户端知道有一个床（方块）
+		 *所以就先把点击的方块变成床，玩家睡眠后再变回来
 		 */
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
-			Player player = e.getPlayer();
-			Set<Player> sleeping = Collections.newSetFromMap(new WeakHashMap<Player, Boolean>());
+			try {
+				ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+				Player player = e.getPlayer();
+				Material bedBlock = e.getClickedBlock().getType();
+				//bp：右键方块位置
+				BlockPosition bp = new BlockPosition(e.getClickedBlock().getLocation().getBlockX(),
+													 e.getClickedBlock().getLocation().getBlockY(),
+													 e.getClickedBlock().getLocation().getBlockZ());
 			
-			sleeping.add(player);
-			
-			PacketContainer bedPacket = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.BED, false);
-			Location l = e.getClickedBlock().getLocation();
-			BlockPosition bp = new BlockPosition(l.getBlockX(),l.getBlockY(),l.getBlockZ());
-			
-			bedPacket.getEntityModifier(player.getWorld()).write(0, player);
-			bedPacket.getIntegers().write(0, bp.getX()).write(1, bp.getY() + 1).write(2, bp.getZ());
-			
-			for(Player observer : ProtocolLibrary.getProtocolManager().getEntityTrackers(player)){
-				try{
-					ProtocolLibrary.getProtocolManager().sendServerPacket(observer, bedPacket);
+				//创建改变方块的数据包
+				PacketContainer blockChangePacket = manager.createPacket(PacketType.Play.Server.BLOCK_CHANGE);
+				//传入bp数据到数据包中
+				blockChangePacket.getBlockPositionModifier().write(0, bp);
+				//传入一个更改方块的信息到数据包中
+				blockChangePacket.getBlockData().write(0, WrappedBlockData.createData(Material.BED_BLOCK));
+				//发送数据包给客户端
+				manager.sendServerPacket(player,blockChangePacket);
+
+				//创建一个让玩家睡眠的数据包
+				PacketContainer bedPacket = manager.createPacket(PacketType.Play.Server.BED);
+				//传入玩家信息
+				bedPacket.getEntityModifier(player.getWorld()).write(0, player);
+				//传入方块位置
+				bedPacket.getBlockPositionModifier().write(0,bp);
+				
+				//将此数据包广播给全服玩家
+				for(Player observer : manager.getEntityTrackers(player)){
+						//发送数据包
+						manager.sendServerPacket(observer, bedPacket);
+					
 					}
 				
-				catch(InvocationTargetException exception){
+				//创建一个改变方块的数据包（把原先方块变回来）
+				PacketContainer blockChangeBackPacket = manager.createPacket(PacketType.Play.Server.BLOCK_CHANGE);
+				blockChangeBackPacket.getBlockPositionModifier().write(0, bp);
+				blockChangeBackPacket.getBlockData().write(0, WrappedBlockData.createData(bedBlock));
+				manager.sendServerPacket(player,blockChangeBackPacket);
+				
+				
+			}catch(InvocationTargetException exception){
 					throw new RuntimeException("Cannot send packet.", exception);
-				}
-			}
+					}
 			
-            System.out.println(123456);
-			}
+			
 		}
 	}
+}

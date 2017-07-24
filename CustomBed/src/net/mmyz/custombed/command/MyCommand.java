@@ -224,31 +224,6 @@ public class MyCommand implements CommandExecutor {
 				return true;
 			}
 		}
-//		if(args[0].equalsIgnoreCase("test")){
-//			Player player = ((Player) sender).getPlayer();
-//			Set<Player> sleeping = Collections.newSetFromMap(new WeakHashMap<Player, Boolean>());
-//			
-//			sleeping.add(player);
-//			
-//			PacketContainer bedPacket = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.BED, false);
-//			Location l = player.getLocation();
-//			BlockPosition bp = new BlockPosition(l.getBlockX(),l.getBlockY(),l.getBlockZ());
-//			
-//			bedPacket.getEntityModifier(player.getWorld()).write(0, player);
-//			bedPacket.getIntegers().write(1, bp.getX()).write(2, bp.getY() + 1).write(3, bp.getZ());
-//			
-//			for(Player observer : ProtocolLibrary.getProtocolManager().getEntityTrackers(player)){
-//				try{
-//					ProtocolLibrary.getProtocolManager().sendServerPacket(observer, bedPacket);
-//					}
-//				
-//				catch(InvocationTargetException e){
-//					throw new RuntimeException("Cannot send packet.", e);
-//				}
-//			}
-//			
-//            System.out.println(123456);
-//		}
 		return true;
 	}
 }
