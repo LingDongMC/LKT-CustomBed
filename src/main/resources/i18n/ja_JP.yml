@@ -8,41 +8,11 @@ areaListMenu:
   pageStatisticsInfo: "合計%s個のエリア"
 areaManageMenu:
   title: "エリア管理"
-  containerStatisticsInfo: "エリア内には%s個のコンテナがあります"
   deleteSuccessful: "エリア%sの削除に成功しました"
   btn:
     delete: "エリアの削除"
     enable: "有効済み"
     disable: "停止済み"
-    reload: "エリアコンテナを再認識"
-itemListMenu:
-  title: "アイテム選択メニュー"
-  itemInfo: "%s個残っています"
-  pageStatisticsInfo: "合計%s種類のアイテム"
-unstackItemListMenu:
-  title: "アイテム受け取りメニュー"
-  pageStatisticsInfo: "合計%s個のアイテム"
-keyboardMenu:
-  title: "数量選択"
-  calcResPrefix: "取得するアイテムの数量："
-  mode:
-    getBySingle: "個数で取得"
-    getByGroup: "グループで取得"
-    getByBox: "ボックスで取得"
-  unit:
-    single: "個"
-    group: "グループ"
-    box: "ボックス"
-  btn:
-    clear: "クリア"
-    delete: "削除"
-    confirm: "確認"
-shulkerBoxPlaceMenu:
-  title: "対応する数のシュルカーボックスを配置してください"
-  notEmptyBox: "アイテムを取得するためのシュルカーボックスは空でなければなりません"
-  btn:
-    cancel: "キャンセル"
-    confirm: "確認"
 cmd:
   helpMsg: [
     "アイテムプラグインコマンドのヘルプ:",
@@ -56,17 +26,6 @@ cmd:
       "アイテムプラグインエリア管理メニューのヘルプ:",
       "/mr area - エリア管理メニューを開く"
     ]
-    reloadMsg:
-      updateComplete: "収集エリアの更新が完了しました"
-      decrease: "、減少しました"
-      increase: "、増加しました"
-      chestCount: "%s個のチェスト、"
-      barrelCount: "%s個のバレル、"
-      furnaceCount: "%s個のかまど、"
-      blastFurnaceCount: "%s個の溶鉱炉、"
-      smokerCount: "%s個の燻製器、"
-      hopperCount: "%s個のホッパー、"
-    identifyContainerFailed: "収集エリアのコンテナの再認識に失敗しました"
   markCmd:
     helpMsg: [
       "アイテムプラグインマーキングコマンドのヘルプ:",
@@ -98,14 +57,3 @@ cmd:
     selectPoint: "マークポイント%sを選択しました[%s, %s, %s]"
     areaTooLarge: "エリアの範囲は27000ブロックを超えることはできません"
     areaStatisticsMsg: "このエリアの合計サイズは%sブロックで、"
-  itemCmd:
-    helpMsg: [
-      "アイテムプラグインアイテムメニューのヘルプ:",
-      "/mr item - アイテムメニューを開く"
-    ]
-    noAmount: "このアイテムの在庫はありません"
-    amountChanged: "アイテムの在庫が変更されました。実際に受け取る数量は要求された数量よりも少なくなります"
-    amountLack: "このアイテムの在庫が不足しています"
-    freeSlotLack: "空きスロットが不足しています。アイテムを受け取る前にインベントリを整理してください"
-    getSuccessful: "アイテムの受け取りに成功しました。合計%sグループ、%s個のアイテム"
-    getByBoxSuccessful: "アイテムの受け取りに成功しました。合計%s個のボックス"

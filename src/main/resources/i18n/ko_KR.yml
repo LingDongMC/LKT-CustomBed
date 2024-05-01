@@ -8,41 +8,11 @@ areaListMenu:
   pageStatisticsInfo: "총 %s개 지역"
 areaManageMenu:
   title: "지역 관리"
-  containerStatisticsInfo: "영역 내에 총 %s개의 컨테이너가 있습니다"
   deleteSuccessful: "지역 %s 삭제 성공"
   btn:
     delete: "지역 삭제"
     enable: "활성화됨"
     disable: "비활성화됨"
-    reload: "컨테이너 재인식"
-itemListMenu:
-  title: "아이템 선택 메뉴"
-  itemInfo: "남은 개수: %s개"
-  pageStatisticsInfo: "총 %s개 아이템 종류"
-unstackItemListMenu:
-  title: "아이템 수령 메뉴"
-  pageStatisticsInfo: "총 %s개의 아이템"
-keyboardMenu:
-  title: "수량 선택"
-  calcResPrefix: "아이템 수량: "
-  mode:
-    getBySingle: "개별적으로 가져오기"
-    getByGroup: "그룹으로 가져오기"
-    getByBox: "상자로 가져오기"
-  unit:
-    single: "개"
-    group: "그룹"
-    box: "상자"
-  btn:
-    clear: "초기화"
-    delete: "삭제"
-    confirm: "확인"
-shulkerBoxPlaceMenu:
-  title: "해당하는 수의 셜커 상자를 배치하세요"
-  notEmptyBox: "아이템을 가져올 셜커 상자는 비어 있어야 합니다"
-  btn:
-    cancel: "취소"
-    confirm: "확인"
 cmd:
   helpMsg: [
     "아이템 플러그인 명령어 도움말:",
@@ -56,17 +26,6 @@ cmd:
       "아이템 플러그인 지역 관리 메뉴 도움말:",
       "/mr area - 지역 관리 메뉴 열기"
     ]
-    reloadMsg:
-      updateComplete: "수집 영역 업데이트 완료"
-      decrease: " 감소함"
-      increase: " 증가함"
-      chestCount: " %s개의 상자,"
-      barrelCount: " %s개의 나무통,"
-      furnaceCount: " %s개의 가마솥,"
-      blastFurnaceCount: " %s개의 높은 가마솥,"
-      smokerCount: " %s개의 연기로,"
-      hopperCount: " %s개의 깔때기,"
-    identifyContainerFailed: "수집 영역 컨테이너 재인식 실패"
   markCmd:
     helpMsg: [
       "아이템 플러그인 표시 명령어 도움말:",
@@ -106,14 +65,3 @@ cmd:
       smokerCount: " %s개의 연기로,"
       hopperCount: " %s개의 깔때기가 있습니다,"
       noContainer: "총 %s개 블록으로 이루어진 구역에 컨테이너가 없습니다."
-  itemCmd:
-    helpMsg: [
-      "아이템 플러그인 아이템 메뉴 도움말:",
-      "/mr item - 아이템 메뉴 열기"
-    ]
-    noAmount: "해당 아이템의 재고가 없습니다"
-    amountChanged: "아이템 재고가 변경되었습니다. 실제 수령 수량은 요청한 수량보다 적을 수 있습니다"
-    amountLack: "해당 아이템의 재고가 부족합니다"
-    freeSlotLack: "인벤토리의 빈 슬롯이 부족합니다. 아이템을 수령하기 전에 인벤토리를 정리하세요"
-    getSuccessful: "아이템 수령에 성공했습니다. 총 %s개 그룹, %s개 아이템"
-    getByBoxSuccessful: "아이템 수령에 성공했습니다. 총 %s개 상자"

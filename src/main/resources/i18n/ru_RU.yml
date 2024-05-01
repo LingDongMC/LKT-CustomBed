@@ -8,40 +8,11 @@ areaListMenu:
   pageStatisticsInfo: "Всего %s областей"
 areaManageMenu:
   title: "Управление областями"
-  containerStatisticsInfo: "В области %s контейнеров"
   deleteSuccessful: "Область %s успешно удалена"
   btn:
     delete: "Удалить область"
     enable: "Включено"
     disable: "Отключено"
-    reload: "Перезагрузить содержимое областей"
-itemListMenu:
-  title: "Меню выбора предметов"
-  pageStatisticsInfo: "Всего %s типов предметов"
-unstackItemListMenu:
-  title: "Меню получения предметов"
-  pageStatisticsInfo: "Всего предметов: %s"
-keyboardMenu:
-  title: "Выбор количества"
-  calcResPrefix: "Количество выбранных предметов: "
-  mode:
-    getBySingle: "Получить отдельно"
-    getByGroup: "Получить группой"
-    getByBox: "Получить коробкой"
-  unit:
-    single: "шт"
-    group: "групп"
-    box: "коробок"
-  btn:
-    clear: "Очистить"
-    delete: "Удалить"
-    confirm: "Подтвердить"
-shulkerBoxPlaceMenu:
-  title: "Пожалуйста, поместите соответствующее количество шулкер-боксов"
-  notEmptyBox: "Шулкер-бокс для получения предметов должен быть пустым"
-  btn:
-    cancel: "Отмена"
-    confirm: "Подтвердить"
 cmd:
   helpMsg: [
     "Справка по командам плагина предметов:",
@@ -55,17 +26,6 @@ cmd:
       "Справка по меню управления областями плагина предметов:",
       "/mr area - Открыть меню управления областями"
     ]
-    reloadMsg:
-      updateComplete: "Обновление областей сбора завершено"
-      decrease: ", уменьшилось на"
-      increase: ", увеличилось на"
-      chestCount: " %s контейнеров,"
-      barrelCount: " %s бочек,"
-      furnaceCount: " %s печей,"
-      blastFurnaceCount: " %s плавильных печей,"
-      smokerCount: " %s коптильных печей,"
-      hopperCount: " %s воронок,"
-    identifyContainerFailed: "Не удалось перераспознать контейнеры области сбора"
   markCmd:
     helpMsg: [
       "Справка по команде маркировки плагина предметов:",
@@ -97,14 +57,3 @@ cmd:
     selectPoint: "Выбрана %s маркерная точка [%s, %s, %s]"
     areaTooLarge: "Размер области не может превышать 27000 блоков"
     areaStatisticsMsg: "Общий размер области: %s блоков."
-  itemCmd:
-    helpMsg: [
-      "Справка по меню предметов плагина предметов:",
-      "/mr item - Открыть меню предметов"
-    ]
-    noAmount: "Нет доступного запаса этого предмета"
-    amountChanged: "Запас предмета изменился, фактическое количество будет меньше запрашиваемого"
-    amountLack: "Недостаточный запас этого предмета"
-    freeSlotLack: "Недостаточно свободных слотов в инвентаре. Пожалуйста, освободите место перед получением предметов."
-    getSuccessful: "Предметы успешно получены. Всего %s групп, %s предметов"
-    getByBoxSuccessful: "Предметы успешно получены. Всего %s ящиков"

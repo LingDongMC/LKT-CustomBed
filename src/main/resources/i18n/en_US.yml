@@ -8,40 +8,11 @@ areaListMenu:
   pageStatisticsInfo: "Total %s areas"
 areaManageMenu:
   title: "Area Management"
-  containerStatisticsInfo: "%s containers in the area"
   deleteSuccessful: "Area %s deleted successfully."
   btn:
     delete: "Delete Area"
     enable: "Enabled"
     disable: "Disabled"
-    reload: "Reload container recognition in Area"
-itemListMenu:
-  title: "Item Selection Menu"
-  pageStatisticsInfo: "Total %s item types"
-unstackItemListMenu:
-  title: "Item Pickup Menu"
-  pageStatisticsInfo: "Total %s items"
-keyboardMenu:
-  title: "Quantity Selection"
-  calcResPrefix: "Number of items to take: "
-  mode:
-    getBySingle: "Get by single"
-    getByGroup: "Get by group"
-    getByBox: "Get by box"
-  unit:
-    single: " pcs"
-    group: " groups"
-    box: " boxes"
-  btn:
-    clear: "Clear"
-    delete: "Delete"
-    confirm: "Confirm"
-shulkerBoxPlaceMenu:
-  title: "Please place the corresponding number of shulker boxes"
-  notEmptyBox: "The shulker box used for picking up items must be empty."
-  btn:
-    cancel: "Cancel"
-    confirm: "Confirm"
 cmd:
   helpMsg: [
     "Item plugin command help:",
@@ -55,17 +26,6 @@ cmd:
       "Item plugin area management menu help:",
       "/mr area - Open area management menu"
     ]
-    reloadMsg:
-      updateComplete: "Collection area update completed"
-      decrease: ", decreased"
-      increase: ", increased"
-      chestCount: " %s chest(s),"
-      barrelCount: " %s barrel(s),"
-      furnaceCount: " %s furnace(s),"
-      blastFurnaceCount: " %s blast furnace(s),"
-      smokerCount: " %s smoker(s),"
-      hopperCount: " %s hopper(s),"
-    identifyContainerFailed: "Failed to re-identify container for collection area"
   markCmd:
     helpMsg: [
       "Item plugin mark command help:",
@@ -97,14 +57,3 @@ cmd:
     selectPoint: "Selected mark point %s [%s, %s, %s]"
     areaTooLarge: "The area cannot be larger than 27000 blocks."
     areaStatisticsMsg: "Total block size of this area is %s"
-  itemCmd:
-    helpMsg: [
-      "Item plugin item menu help:",
-      "/mr item - Open item menu"
-    ]
-    noAmount: "No stock for this item currently"
-    amountChanged: "The stock of the item has changed, the actual quantity received will be less than the requested quantity."
-    amountLack: "Not enough stock for this item"
-    freeSlotLack: "Not enough free slots in inventory. Please clear your inventory before receiving items."
-    getSuccessful: "Items received successfully, total of %s groups, %s items."
-    getByBoxSuccessful: "Items received successfully, total of %s boxes."

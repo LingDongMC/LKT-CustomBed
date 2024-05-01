@@ -8,41 +8,11 @@ areaListMenu:
   pageStatisticsInfo: "Insgesamt %s Bereiche"
 areaManageMenu:
   title: "Bereichsverwaltung"
-  containerStatisticsInfo: "In diesem Bereich befinden sich insgesamt %s Container."
   deleteSuccessful: "Bereich %s erfolgreich gelöscht"
   btn:
     delete: "Bereich löschen"
     enable: "Aktiviert"
     disable: "Deaktiviert"
-    reload: "Container erneut erkennen"
-itemListMenu:
-  title: "Menü zur Auswahl von Gegenständen"
-  itemInfo: "%s übrig"
-  pageStatisticsInfo: "Insgesamt %s Arten von Gegenständen"
-unstackItemListMenu:
-  title: "Gegenstandsabholmenü"
-  pageStatisticsInfo: "%s Gegenstände insgesamt"
-keyboardMenu:
-  title: "Mengenauswahl"
-  calcResPrefix: "Menge der ausgewählten Gegenstände: "
-  mode:
-    getBySingle: "Einzeln abrufen"
-    getByGroup: "Nach Gruppe abrufen"
-    getByBox: "Nach Box abrufen"
-  unit:
-    single: "Stk."
-    group: "Gruppen"
-    box: "Boxen"
-  btn:
-    clear: "Leeren"
-    delete: "Löschen"
-    confirm: "Bestätigen"
-shulkerBoxPlaceMenu:
-  title: "Bitte platzieren Sie die entsprechende Anzahl von Shulker-Boxen"
-  notEmptyBox: "Die Shulker-Box zum Sammeln muss leer sein"
-  btn:
-    cancel: "Abbrechen"
-    confirm: "Bestätigen"
 cmd:
   helpMsg: [
     "Hilfe für die Befehle des Item-Plugins:",
@@ -56,17 +26,6 @@ cmd:
       "Hilfe für das Bereichsverwaltungsmenü des Item-Plugins:",
       "/mr area - Öffnen des Bereichsverwaltungsmenüs"
     ]
-    reloadMsg:
-      updateComplete: "Aktualisierung des Sammelbereichs abgeschlossen"
-      decrease: " Abnahme"
-      increase: " Erhöhung"
-      chestCount: " %s Truhe(n),"
-      barrelCount: " %s Fass(Fässer),"
-      furnaceCount: " %s Ofen(Öfen),"
-      blastFurnaceCount: " %s Schmelzofen(Schmelzöfen),"
-      smokerCount: " %s Räucherofen(Räucheröfen),"
-      hopperCount: " %s Trichter,"
-    identifyContainerFailed: "Containererkennung fehlgeschlagen"
   markCmd:
     helpMsg: [
       "Hilfe für den Markierungsbefehl des Item-Plugins:",
@@ -98,14 +57,3 @@ cmd:
     selectPoint: "Markierungspunkt %s ausgewählt [%s, %s, %s]"
     areaTooLarge: "Der Bereich darf nicht größer als 27000 Blöcke sein."
     areaStatisticsMsg: "In diesem Bereich, der insgesamt aus %s Blöcken besteht"
-  itemCmd:
-    helpMsg: [
-      "Hilfe für das Item-Menü des Item-Plugins:",
-      "/mr item - Öffnen des Item-Menüs"
-    ]
-    noAmount: "Kein Bestand für diesen Gegenstand vorhanden"
-    amountChanged: "Der Bestand des Gegenstands hat sich geändert, die tatsächlich empfangene Menge wird geringer sein als die angeforderte Menge"
-    amountLack: "Unzureichender Bestand für diesen Gegenstand"
-    freeSlotLack: "Nicht genügend freie Inventarslots. Bitte räumen Sie das Inventar auf, bevor Sie Gegenstände erhalten."
-    getSuccessful: "Gegenstände erfolgreich erhalten. Insgesamt %s Gruppen, %s Gegenstände"
-    getByBoxSuccessful: "Gegenstände erfolgreich erhalten. Insgesamt %s Boxen"
