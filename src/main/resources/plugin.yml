@@ -1,0 +1,10 @@
+name: LKT-CustomBed
+version: '${project.version}'
+main: com.github.lockoct.Main
+api-version: 1.20
+authors: [lockoct]
+depend: [LKT-Core, ProtocolLib]
+commands:
+ custombed:
+  description: LKT自定义床插件使用命令
+  aliases: [cb]

@@ -3,57 +3,60 @@ pluginMsg:
   dbConnectFailed: "プラグインの起動に失敗しました。データベースに接続されていません。データベースを起動してから、このプラグインを再読み込みしてください"
   commandConfigNotFound: "プラグインの起動に失敗しました。コマンドの設定が見つかりませんでした。このプラグインを再ダウンロードしてください"
   commandNotExecInGame: "このコマンドはゲーム内で実行する必要があります"
-areaListMenu:
-  title: "エリア管理メニュー"
-  pageStatisticsInfo: "合計%s個のエリア"
-areaManageMenu:
-  title: "エリア管理"
-  deleteSuccessful: "エリア%sの削除に成功しました"
+bedListMenu:
+  title: "ベッドエリア管理メニュー"
+  pageStatisticsInfo: "合計 %s 個のベッドエリア"
+bedManageMenu:
+  title: "ベッドエリア管理"
+  deleteSuccessful: "ベッドエリア %s 削除成功"
   btn:
     delete: "エリアの削除"
     enable: "有効済み"
     disable: "停止済み"
 cmd:
-  helpMsg: [
-    "アイテムプラグインコマンドのヘルプ:",
-    "/mr mark - 収集エリアをマークするコマンド",
-    "/mr item - アイテムメニューを開く",
-    "/mr area - エリア管理メニューを開く",
-    "詳細な利用方法については、任意のサブコマンドを選択してください。"
-  ]
-  areaCmd:
-    helpMsg: [
-      "アイテムプラグインエリア管理メニューのヘルプ:",
-      "/mr area - エリア管理メニューを開く"
-    ]
+  helpMsg:
+    - "カスタムベッドプラグインコマンドのヘルプ："
+    - "/cb mark - ベッドエリアをマークするコマンド"
+    - "/cb bed - ベッドエリア管理メニューを開く"
+    - "詳細な使用法を確認するには、任意のサブコマンドを入力してください。"
+  bedCmd:
+    helpMsg:
+      - "カスタムベッドエリア管理メニューのヘルプ:"
+      - "/cb bed - ベッドエリア管理メニューを開く"
   markCmd:
-    helpMsg: [
-      "アイテムプラグインマーキングコマンドのヘルプ:",
-      "/mr mark start - マーキングモードを開始する",
-      "/mr mark cancel - 保存せずにマーキングモードを終了する",
-      "/mr mark save エリア名 - エリアを保存する"
-    ]
+    helpMsg:
+      - "カスタムベッドマークコマンドのヘルプ:"
+      - "/cb mark start - マークモードを開始する"
+      - "/cb mark cancel - 保存せずにマークモードを終了する"
+      - "/cb mark save ベッドエリア名 - ベッドエリアを保存する"
     startCmd:
-      helpMsg: [
-        "概要：マーキングモードを開始し、アイテム収集エリアを定義します",
-        "コマンド：/mr mark start"
-      ]
+      helpMsg:
+        - "概要：マークモードを開始し、マークモードでベッドエリアを定義できます"
+        - "コマンド：/cb mark start"
     saveCmd:
-      helpMsg: [
-        "概要：マークしたエリアを保存し、プラグインはそのエリアのコンテナからアイテムを収集します",
-        "コマンド：/mr mark save エリア名"
-      ]
-      markPointsInDifferentWorld: "2つのマークポイントが同じディメンションにありません。やり直してください"
-      cannotGetMarkPointWorld: "マークポイントのワールドを取得できません"
+      helpMsg:
+        - "概要: マークされたエリアを保存する"
+        - "コマンド: /cb mark save ベッドエリア名"
       markPointSelectNotComplete: "マークポイントが選択されていません。保存する前に2つのマークポイントを選択してください"
-      saveSuccessful: "収集エリアの保存に成功しました。マーキングモードを終了します"
-      saveFailed: "収集エリアの保存に失敗しました。マーキングモードを終了します"
+      saveSuccessful: "ベッドエリアが正常に保存されました。マークモードを終了しました。"
+      saveFailed: "ベッドエリアを保存できませんでした。マークモードを終了しました。"
     cancelCmd:
       exitMarkMode: "マーキングモードをキャンセルして終了しました"
     clearCmd:
       selectionCleared: "選択がクリアされました"
-    notInMarkMode: "マーキングモードではありません。 /mr mark start を使用して収集エリアをマークするには、まずマーキングモードに入る必要があります"
-    alreadyInMarkMode: "既にマーキングモードに入っています。左右クリックを使用して2つのポイントを選択し、立方体として収集エリアを形成してください"
+    notInMarkMode: "マークモードに入っていません。ベッドエリアをマークするには、まず /cb mark start を使用してください。"
+    alreadyInMarkMode: "すでにマークモードに入っています。左右のキーを使用して2つのポイントを選択してください。2つのポイントの間に平面が形成され、ベッドエリアになります。"
     selectPoint: "マークポイント%sを選択しました[%s, %s, %s]"
-    areaTooLarge: "エリアの範囲は27000ブロックを超えることはできません"
+    areaTooLarge: "エリアが大きすぎます。900ブロックを超えることはできません"
+    yAxisInconsistency: "2つのマークポイントは同じ平面上にある必要があります。つまり、Y軸座標が等しくなければなりません。"
+    cannotGetMarkPointWorld: "マークポイントのワールド位置を取得できません。"
+    markPointsNotInMainWorld: "マークポイントはメインワールド内にある必要があります。もう一度マークしてください。"
+    existOtherBed:
+      start: "現在の選択エリアに他のベッドエリアが存在します。再選択してください。"
+      bedName: "ベッドエリア名：%s、"
+      bedCoordinate: "座標：[%s, %s, %s] ～ [%s, %s, %s]、"
+      owner: "所有者：%s"
     areaStatisticsMsg: "このエリアの合計サイズは%sブロックで、"
+sleep:
+  notPossibleNow: "夜もしくは雷雨のときのみ寝ることができます"
+  notSafe: "モンスターが近くにいるため寝ることができません"
