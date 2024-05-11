@@ -1,0 +1,62 @@
+pluginMsg:
+  enableSuccess: "Plugin wurde erfolgreich gestartet"
+  dbConnectFailed: "Plugin konnte nicht gestartet werden, Datenbank nicht verbunden. Bitte starten Sie die Datenbank und laden Sie das Plugin erneut."
+  commandConfigNotFound: "Plugin konnte nicht gestartet werden, Befehlskonfiguration nicht gefunden. Bitte laden Sie dieses Plugin erneut herunter."
+  commandNotExecInGame: "Dieser Befehl muss im Spiel ausgeführt werden."
+bedListMenu:
+  title: "Bettbereichsverwaltungsmenü"
+  pageStatisticsInfo: "Insgesamt %s Bettbereiche"
+bedManageMenu:
+  title: "Bettbereichsverwaltung"
+  deleteSuccessful: "Bettbereich %s erfolgreich gelöscht"
+  btn:
+    delete: "Bereich löschen"
+    enable: "Aktiviert"
+    disable: "Deaktiviert"
+cmd:
+  helpMsg:
+    - "Benutzerdefinierte Bettplugin-Befehle Hilfe:"
+    - "/cb mark - Befehl zum Markieren von Bettbereichen"
+    - "/cb bed - Öffnet das Bettbereichsverwaltungsmenü"
+    - "Wählen Sie eine beliebige Unterbefehlseingabe, um eine detaillierte Anwendung anzuzeigen."
+  bedCmd:
+    helpMsg:
+      - "Hilfe für das Bettbereichsverwaltungsmenü:"
+      - "/cb bed - Öffnet das Bettbereichsverwaltungsmenü"
+  markCmd:
+    helpMsg:
+      - "Hilfe für benutzerdefinierte Bettmarkierungsbefehle:"
+      - "/cb mark start - Startet den Markierungsmodus"
+      - "/cb mark cancel - Beendet den Markierungsmodus ohne Speichern"
+      - "/cb mark save Bettbereichsname - Speichert den Bettbereich"
+    startCmd:
+      helpMsg:
+        - "Einführung: Startet den Markierungsmodus, um einen Bettbereich zu markieren"
+        - "Befehl: /cb mark start"
+    saveCmd:
+      helpMsg:
+        - "Einführung: Speichert den markierten Bereich"
+        - "Befehl: /cb mark save Bettbereichsname"
+      markPointSelectNotComplete: "Die Markierungspunkte wurden nicht ausgewählt. Bitte wählen Sie zwei Markierungspunkte aus, bevor Sie speichern."
+      saveSuccessful: "Bettbereich erfolgreich gespeichert, Markierungsmodus wurde beendet."
+      saveFailed: "Speichern des Bettbereichs fehlgeschlagen, Markierungsmodus wurde beendet."
+    cancelCmd:
+      exitMarkMode: "Abgebrochen und Markierungsmodus beendet"
+    clearCmd:
+      selectionCleared: "Auswahl gelöscht"
+    notInMarkMode: "Sie befinden sich nicht im Markierungsmodus. Bitte verwenden Sie /mr mark start, um in den Markierungsmodus für den Item-Sammelbereich einzutreten."
+    alreadyInMarkMode: "Sie befinden sich bereits im Markierungsmodus. Verwenden Sie die linke und rechte Maustaste, um zwei Punkte auszuwählen und einen Würfel als Sammelbereich zu markieren."
+    selectPoint: "Markierungspunkt %s ausgewählt [%s, %s, %s]"
+    areaTooLarge: "Der Bereich darf nicht größer als 900 Blöcke sein."
+    yAxisInconsistency: "Die beiden Markierungspunkte müssen in derselben Ebene liegen, dh"
+    cannotGetMarkPointWorld: "Kann den Weltstandort des Markierungspunkts nicht abrufen"
+    markPointsNotInMainWorld: "Die Markierungspunkte müssen sich in der Hauptwelt befinden. Bitte markieren Sie erneut"
+    existOtherBed:
+      start: "Das ausgewählte Gebiet enthält bereits andere Bettbereiche. Bitte wählen Sie erneut aus"
+      bedName: "Bettbereichsname: %s,"
+      bedCoordinate: "Koordinaten: [%s, %s, %s] ~ [%s, %s, %s],"
+      owner: "Besitzer: %s"
+    areaStatisticsMsg: "In diesem Bereich, der insgesamt aus %s Blöcken besteht"
+sleep:
+  notPossibleNow: "Du kannst nur nachts oder während eines Gewitters schlafen"
+  notSafe: "Du kannst jetzt nicht schlafen, es sind Monster in der Nähe"

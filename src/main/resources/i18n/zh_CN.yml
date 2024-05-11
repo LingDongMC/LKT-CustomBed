@@ -1,0 +1,63 @@
+pluginMsg:
+  enableSuccess: "插件启动成功"
+  dbConnectFailed: "插件启动失败，未连接数据库，请开启数据库后再重新加载本插件"
+  commandConfigNotFound: "插件启动失败，找不到命令配置，请重新下载本插件"
+  commandNotExecInGame: "该命令必须在游戏中执行"
+bedListMenu:
+  title: "床区域管理菜单"
+  pageStatisticsInfo: "共 %s 块床区域"
+bedManageMenu:
+  title: "床区域管理"
+  deleteSuccessful: "床区域 %s 删除成功"
+  btn:
+    delete: "删除区域"
+    enable: "已启用"
+    disable: "已禁用"
+cmd:
+  helpMsg:
+    - "自定义床插件命令帮助："
+    - "/cb mark - 标记床区域命令"
+    - "/cb bed - 打开床区域管理菜单"
+    - "选择输入任意子命令，可查看详细用法。"
+  bedCmd:
+    helpMsg:
+      - "自定义床区域管理菜单帮助："
+      - "/cb bed - 打开床区域管理菜单"
+  markCmd:
+    helpMsg:
+      - "自定义床标记命令帮助："
+      - "/cb mark start - 开启标记模式"
+      - "/cb mark cancel - 不保存退出标记模式"
+      - "/cb mark save 床区域名称 - 保存床区域"
+    startCmd:
+      helpMsg:
+        - "介绍：开启标记模式，在标记模式下可划定床区域"
+        - "命令：/cb mark start"
+    saveCmd:
+      helpMsg:
+        - "介绍：保存标记区域"
+        - "命令：/cb mark save 床区域名称"
+      markPointSelectNotComplete: "标记点未选取完成，请选取两个标记点后再进行保存"
+      saveSuccessful: "床区域保存成功，已退出标记模式"
+      saveFailed: "床区域保存失败，已退出标记模式"
+    cancelCmd:
+      exitMarkMode: "已取消并退出标记模式"
+    clearCmd:
+      selectionCleared: "已清除选区"
+    notInMarkMode: "未进入标记模式，请先使用 /cb mark start 进入标记模式标记床区域"
+    alreadyInMarkMode: "已进入标记模式，请使用左右键分别选取两个点，两个点之间形成平面为床区域"
+    selectPoint: "已选中第%s个标记点[%s, %s, %s]"
+    areaTooLarge: "区域范围不能大于900方块大小"
+    yAxisInconsistency: "两个标记点必须在同一个平面，即Y轴坐标必须相等"
+    cannotGetMarkPointWorld: "无法获取标记点所在世界"
+    markPointsNotInMainWorld: "标记点必须在主世界，请重新标记"
+    existOtherBed:
+      start: "当前选择区域存在其他的床区域，请重新选择"
+      bedName: "床区域名称：%s，"
+      bedCoordinate: "起止坐标：[%s, %s, %s] ~ [%s, %s, %s]，"
+      owner: "所有者：%s"
+    areaStatisticsMsg: "该区域总计%s方块大小"
+sleep:
+  notPossibleNow: "你只能在夜间或雷暴中入眠"
+  notSafe: "你现在不能休息，周围有怪物在游荡"
+

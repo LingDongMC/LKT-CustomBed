@@ -1,0 +1,62 @@
+pluginMsg:
+  enableSuccess: "Plugin démarré avec succès"
+  dbConnectFailed: "Échec du démarrage du plugin, base de données non connectée. Veuillez démarrer la base de données et recharger ce plugin."
+  commandConfigNotFound: "Échec du démarrage du plugin, configuration de commande introuvable. Veuillez télécharger à nouveau ce plugin."
+  commandNotExecInGame: "Cette commande doit être exécutée en jeu."
+bedListMenu:
+  title: "Menu de gestion des zones de lit"
+  pageStatisticsInfo: "Total %s zones de lit"
+bedManageMenu:
+  title: "Gestion des zones de lit"
+  deleteSuccessful: "Zone de lit %s supprimée avec succès"
+  btn:
+    delete: "Supprimer la zone"
+    enable: "Activé"
+    disable: "Désactivé"
+cmd:
+  helpMsg:
+    - "Aide aux commandes de plugin de lit personnalisé :"
+    - "/cb mark - Commande de marquage des zones de lit"
+    - "/cb bed - Ouvrir le menu de gestion des zones de lit"
+    - "Sélectionnez une commande secondaire pour voir l'utilisation détaillée."
+  bedCmd:
+    helpMsg:
+      - "Aide au menu de gestion des zones de lit :"
+      - "/cb bed - Ouvrir le menu de gestion des zones de lit"
+  markCmd:
+    helpMsg:
+      - "Aide aux commandes de marquage des lits personnalisées :"
+      - "/cb mark start - Démarrer le mode de marquage"
+      - "/cb mark cancel - Quitter le mode de marquage sans enregistrer"
+      - "/cb mark save Nom de la zone de lit - Enregistrer la zone de lit"
+    startCmd:
+      helpMsg:
+        - "Description : Démarrer le mode de marquage, peut définir la zone de lit en mode de marquage"
+        - "Commande : /cb mark start"
+    saveCmd:
+      helpMsg:
+        - "Description : Enregistrer la zone marquée"
+        - "Commande : /cb mark save Nom de la zone de lit"
+      markPointSelectNotComplete: "Les points de marquage n'ont pas été sélectionnés. Veuillez sélectionner deux points de marquage avant d'enregistrer."
+      saveSuccessful: "Zone de lit enregistrée avec succès, mode de marquage quitté."
+      saveFailed: "Impossible d'enregistrer la zone de lit, mode de marquage quitté."
+    cancelCmd:
+      exitMarkMode: "Annulation et sortie du mode de marquage."
+    clearCmd:
+      selectionCleared: "Sélection effacée."
+    notInMarkMode: "Pas en mode de marquage, veuillez utiliser /cb mark start pour entrer en mode de marquage et marquer la zone de lit."
+    alreadyInMarkMode: "Déjà en mode de marquage, veuillez utiliser les touches gauche et droite pour sélectionner deux points, formant un plan entre les deux points comme zone de lit."
+    selectPoint: "Point de marquage %s sélectionné [%s, %s, %s]"
+    areaTooLarge: "La plage de la zone ne peut pas être supérieure à 900 blocs"
+    yAxisInconsistency: "Les deux points de marquage doivent être dans le même plan, c'est-à-dire que les coordonnées sur l'axe Y doivent être égales"
+    cannotGetMarkPointWorld: "Impossible d'obtenir l'emplacement mondial du point de marquage"
+    markPointsNotInMainWorld: "Les points de marquage doivent être dans le monde principal, veuillez recommencer"
+    existOtherBed:
+      start: "D'autres zones de lit existent dans la zone sélectionnée, veuillez sélectionner à nouveau"
+      bedName: "Nom de la zone de lit : %s,"
+      bedCoordinate: "Coordonnées : [%s, %s, %s] ~ [%s, %s, %s],"
+      owner: "Propriétaire : %s"
+    areaStatisticsMsg: "Dans cette zone, qui se compose au total de %s blocs"
+sleep:
+  notPossibleNow: "Vous ne pouvez dormir que la nuit ou durant les orages"
+  notSafe: "Vous ne pouvez pas dormir maintenant, il y a des monstres à proximité"
