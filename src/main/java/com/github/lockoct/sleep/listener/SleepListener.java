@@ -91,9 +91,10 @@ public class SleepListener implements Listener {
             }
 
             World world = player.getWorld();
-            int x = customBedBlock.getLocation().getBlockX();
-            int y = customBedBlock.getLocation().getBlockY();
-            int z = customBedBlock.getLocation().getBlockZ();
+            Location customBedBlockLocation = customBedBlock.getLocation();
+            int x = customBedBlockLocation.getBlockX();
+            int y = customBedBlockLocation.getBlockY();
+            int z = customBedBlockLocation.getBlockZ();
 
             // 查询当前点击的是否是自定义床
             Dao dao = DatabaseUtil.getDao();
@@ -107,6 +108,26 @@ public class SleepListener implements Listener {
             if (res == 0) {
                 return;
             }
+
+            // 设置出生点
+            Location newSpawnPoint = customBedBlockLocation.add(0.5, 1, 0.5);
+            Optional.ofNullable(player.getBedSpawnLocation())
+                .ifPresentOrElse(
+                    location -> {
+                        if (
+                            Math.abs(location.getBlockX() - newSpawnPoint.getBlockX()) >= 1 ||
+                                Math.abs(location.getBlockY() - newSpawnPoint.getBlockY()) >= 1 ||
+                                Math.abs(location.getBlockZ() - newSpawnPoint.getBlockZ()) >= 1
+                        ) {
+                            player.setBedSpawnLocation(newSpawnPoint, true);
+                            player.sendMessage(I18nUtil.getText(Main.plugin, player, "sleep.setSpawnPoint"));
+                        }
+                    },
+                    () -> {
+                        player.setBedSpawnLocation(newSpawnPoint, true);
+                        player.sendMessage(I18nUtil.getText(Main.plugin, player, "sleep.setSpawnPoint"));
+                    }
+                );
 
             // 检查是否可以睡觉
             if (!this.canSleep(world, player)) {

@@ -60,3 +60,4 @@ cmd:
 sleep:
   notPossibleNow: "Du kannst nur nachts oder während eines Gewitters schlafen"
   notSafe: "Du kannst jetzt nicht schlafen, es sind Monster in der Nähe"
+  setSpawnPoint: "Wiedereinstiegspunkt gesetzt"
