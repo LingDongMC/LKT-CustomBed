@@ -60,3 +60,4 @@ cmd:
 sleep:
   notPossibleNow: "Vous ne pouvez dormir que la nuit ou durant les orages"
   notSafe: "Vous ne pouvez pas dormir maintenant, il y a des monstres à proximité"
+  setSpawnPoint: "point de réapparition défini"
