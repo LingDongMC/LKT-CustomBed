@@ -177,8 +177,9 @@ public class SleepListener implements Listener {
             // 要让玩家进入睡眠状态，需要让客户端知道有一个床方块
             // 因此需要构建BlockChange数据包，改变某个方块为床方块（假方块）
             // https://wiki.vg/Protocol#Block_Update
-            // 假方块位置为当前床方块向下一格
-            Location fakeBedLocation = bedLocation.clone().add(0, -1, 0);
+            // 假方块位置为y轴最小值
+            Location fakeBedLocation = bedLocation.clone();
+            fakeBedLocation.setY(world.getMinHeight());
 
             PacketContainer blockPacket = manager.createPacket(PacketType.Play.Server.BLOCK_CHANGE);
             // 设置假方块位置
@@ -198,7 +199,7 @@ public class SleepListener implements Listener {
             sleepPosValue.setValue(Optional.of(new BlockPosition(fakeBedLocation.toVector())));
             entityMetadataPacket.getDataValueCollectionModifier().write(0, List.of(
                 // Entity中的第6个属性为玩家姿势，设置这个其他玩家才能看到该玩家躺下
-                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.SLEEPING),
+                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.SLEEPING.toNms()),
                 sleepPosValue
             ));
 
@@ -210,7 +211,8 @@ public class SleepListener implements Listener {
 
             // 由于假方块隐藏在地下，触发睡觉后，玩家也会进入地下
             // 为避免玩家醒来后在地下，需要把玩家tp回床方块向上一格
-            player.teleport(bedLocation.clone().add(0, 1, 0));
+            // 确保玩家睡在方块正中心，x、z需要偏移0.5
+            player.teleport(bedLocation.clone().add(0.5, 1, 0.5));
             // 添加玩家到睡眠队列中
             sleepingPlayer.put(player, fakeBedLocation);
         } else {
@@ -232,7 +234,7 @@ public class SleepListener implements Listener {
             // 设置metaData
             entityMetadataPacket.getDataValueCollectionModifier().write(0, List.of(
                 // 设置玩家姿势为站立
-                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.STANDING),
+                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.STANDING.toNms()),
                 new WrappedDataValue(14, WrappedDataWatcher.Registry.getBlockPositionSerializer(true), Optional.empty())
             ));
 
