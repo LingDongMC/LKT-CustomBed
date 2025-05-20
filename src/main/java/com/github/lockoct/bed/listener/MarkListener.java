@@ -51,6 +51,10 @@ public class MarkListener implements Listener {
             Location point1 = data.getMarkPoint1();
             Location point2 = data.getMarkPoint2();
 
+            if (point1 == null || point2 == null) {
+                return;
+            }
+
             // 检查两个标记点是否在同一平面
             if (point1.getBlockY() != point2.getBlockY()) {
                 player.sendMessage(ChatColor.RED + I18nUtil.getText(Main.plugin, player, "cmd.markCmd.yAxisInconsistency"));

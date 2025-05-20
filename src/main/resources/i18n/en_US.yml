@@ -60,3 +60,4 @@ cmd:
 sleep:
   notPossibleNow: "You can sleep only at night or during thunderstorms"
   notSafe: "You may not rest now; there are monsters nearby"
+  setSpawnPoint: "Respawn point set"
