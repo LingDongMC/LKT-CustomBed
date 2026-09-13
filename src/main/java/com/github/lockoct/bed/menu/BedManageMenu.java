@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 public class BedManageMenu extends BaseMenu {
     private boolean enabled;
-    private final int STATUS_BTN_POS = 33;
 
     public BedManageMenu(String title, HashMap<String, Object> menuContext, Player player) {
         super(54, title, menuContext, player, Main.plugin);
@@ -27,9 +26,8 @@ public class BedManageMenu extends BaseMenu {
         BedArea bedInfo = (BedArea) menuContext.get("bedInfo");
 
         // 设置告示信息
-        int INFO_POS = 13;
-        ItemStack is = setOptItem(Material.OAK_SIGN, bedInfo.getName(), INFO_POS, null);
-        getInventory().setItem(INFO_POS, is);
+        ItemStack is = setOptItem(Material.OAK_SIGN, bedInfo.getName(), 13, null);
+        getInventory().setItem(13, is);
 
         // 删除按钮
         setOptItem(Material.BARRIER, I18nUtil.getText(Main.plugin, player, "bedManageMenu.btn.delete"), 29, "delete");
@@ -38,13 +36,11 @@ public class BedManageMenu extends BaseMenu {
         enabled = bedInfo.isEnabled();
         String enableStr = I18nUtil.getText(Main.plugin, player, enabled ? "bedManageMenu.btn.enable" : "bedManageMenu.btn.disable");
         Material enableItemMaterial = enabled ? Material.LIME_CONCRETE : Material.RED_CONCRETE;
-        setOptItem(enableItemMaterial, enableStr, STATUS_BTN_POS, "enable");
+        setOptItem(enableItemMaterial, enableStr, 31, "enable");
 
         // 返回、退出按钮
-        int BACK_BTN_POS = 48;
-        int EXIT_BTN_POS = 50;
-        setOptItem(Material.ARROW, I18nUtil.getCommonText(player, "menu.back"), BACK_BTN_POS, "back");
-        setOptItem(Material.DARK_OAK_DOOR, I18nUtil.getCommonText(player, "menu.exit"), EXIT_BTN_POS, "exit");
+        setOptItem(Material.ARROW, I18nUtil.getCommonText(player, "menu.back"), 48, "back");
+        setOptItem(Material.DARK_OAK_DOOR, I18nUtil.getCommonText(player, "menu.exit"), 50, "exit");
 
         // 背景
         setBackGround(Material.BLUE_STAINED_GLASS_PANE);
@@ -63,7 +59,7 @@ public class BedManageMenu extends BaseMenu {
                     if (res > 0) {
                         String enableStr = I18nUtil.getText(Main.plugin, getPlayer(), enabled ? "bedManageMenu.btn.enable" : "bedManageMenu.btn.disable");
                         Material enableItemMaterial = enabled ? Material.LIME_CONCRETE : Material.RED_CONCRETE;
-                        ItemStack is = getInventory().getItem(STATUS_BTN_POS);
+                        ItemStack is = getInventory().getItem(31);
                         assert is != null;
                         is.setType(enableItemMaterial);
                         ItemMeta im = is.getItemMeta();
