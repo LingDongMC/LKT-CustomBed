@@ -60,4 +60,3 @@ cmd:
 sleep:
   notPossibleNow: "夜もしくは雷雨のときのみ寝ることができます"
   notSafe: "モンスターが近くにいるため寝ることができません"
-  setSpawnPoint: "リスポーン地点が設定されました"
