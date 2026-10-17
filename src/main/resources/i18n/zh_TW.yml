@@ -60,4 +60,3 @@ cmd:
 sleep:
   notPossibleNow: "你只能在晚上或暴風雨中入睡"
   notSafe: "你現在無法休息，附近有怪物在遊蕩"
-  setSpawnPoint: "已設定重生點"
