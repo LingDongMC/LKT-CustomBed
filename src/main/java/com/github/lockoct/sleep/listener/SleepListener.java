@@ -91,10 +91,9 @@ public class SleepListener implements Listener {
             }
 
             World world = player.getWorld();
-            Location customBedBlockLocation = customBedBlock.getLocation();
-            int x = customBedBlockLocation.getBlockX();
-            int y = customBedBlockLocation.getBlockY();
-            int z = customBedBlockLocation.getBlockZ();
+            int x = customBedBlock.getLocation().getBlockX();
+            int y = customBedBlock.getLocation().getBlockY();
+            int z = customBedBlock.getLocation().getBlockZ();
 
             // 查询当前点击的是否是自定义床
             Dao dao = DatabaseUtil.getDao();
@@ -108,26 +107,6 @@ public class SleepListener implements Listener {
             if (res == 0) {
                 return;
             }
-
-            // 设置出生点
-            Location newSpawnPoint = customBedBlockLocation.add(0.5, 1, 0.5);
-            Optional.ofNullable(player.getBedSpawnLocation())
-                .ifPresentOrElse(
-                    location -> {
-                        if (
-                            Math.abs(location.getBlockX() - newSpawnPoint.getBlockX()) >= 1 ||
-                                Math.abs(location.getBlockY() - newSpawnPoint.getBlockY()) >= 1 ||
-                                Math.abs(location.getBlockZ() - newSpawnPoint.getBlockZ()) >= 1
-                        ) {
-                            player.setBedSpawnLocation(newSpawnPoint, true);
-                            player.sendMessage(I18nUtil.getText(Main.plugin, player, "sleep.setSpawnPoint"));
-                        }
-                    },
-                    () -> {
-                        player.setBedSpawnLocation(newSpawnPoint, true);
-                        player.sendMessage(I18nUtil.getText(Main.plugin, player, "sleep.setSpawnPoint"));
-                    }
-                );
 
             // 检查是否可以睡觉
             if (!this.canSleep(world, player)) {
@@ -177,9 +156,8 @@ public class SleepListener implements Listener {
             // 要让玩家进入睡眠状态，需要让客户端知道有一个床方块
             // 因此需要构建BlockChange数据包，改变某个方块为床方块（假方块）
             // https://wiki.vg/Protocol#Block_Update
-            // 假方块位置为y轴最小值
-            Location fakeBedLocation = bedLocation.clone();
-            fakeBedLocation.setY(world.getMinHeight());
+            // 假方块位置为当前床方块向下一格
+            Location fakeBedLocation = bedLocation.clone().add(0, -1, 0);
 
             PacketContainer blockPacket = manager.createPacket(PacketType.Play.Server.BLOCK_CHANGE);
             // 设置假方块位置
@@ -199,7 +177,7 @@ public class SleepListener implements Listener {
             sleepPosValue.setValue(Optional.of(new BlockPosition(fakeBedLocation.toVector())));
             entityMetadataPacket.getDataValueCollectionModifier().write(0, List.of(
                 // Entity中的第6个属性为玩家姿势，设置这个其他玩家才能看到该玩家躺下
-                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.SLEEPING.toNms()),
+                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.SLEEPING),
                 sleepPosValue
             ));
 
@@ -211,8 +189,7 @@ public class SleepListener implements Listener {
 
             // 由于假方块隐藏在地下，触发睡觉后，玩家也会进入地下
             // 为避免玩家醒来后在地下，需要把玩家tp回床方块向上一格
-            // 确保玩家睡在方块正中心，x、z需要偏移0.5
-            player.teleport(bedLocation.clone().add(0.5, 1, 0.5));
+            player.teleport(bedLocation.clone().add(0, 1, 0));
             // 添加玩家到睡眠队列中
             sleepingPlayer.put(player, fakeBedLocation);
         } else {
@@ -234,7 +211,7 @@ public class SleepListener implements Listener {
             // 设置metaData
             entityMetadataPacket.getDataValueCollectionModifier().write(0, List.of(
                 // 设置玩家姿势为站立
-                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.STANDING.toNms()),
+                new WrappedDataValue(6, WrappedDataWatcher.Registry.get(EnumWrappers.getEntityPoseClass()), EnumWrappers.EntityPose.STANDING),
                 new WrappedDataValue(14, WrappedDataWatcher.Registry.getBlockPositionSerializer(true), Optional.empty())
             ));
 
